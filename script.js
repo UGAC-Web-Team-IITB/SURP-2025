@@ -7,14 +7,20 @@ function getCurrentDomain() {
 
 
 // Fetch the projects JSON data
-fetch('projects.json')
+fetch('SURP_projects.json')
     .then(response => response.json())
     .then(projects => {
         const projectCardsContainer = document.getElementById('project-cards');
         const currentDomain = getCurrentDomain();
 
         // Filter projects based on the current domain
-        const filteredProjects = projects.filter(project => project.Domain === currentDomain);
+        const filteredProjects = projects.filter(project =>
+            project.Domain.split('\n').some(domain => domain.trim().toLowerCase() === currentDomain.toLowerCase())
+        );
+        
+        
+        console.log(currentDomain)
+        console.log('Filtered Projects:', filteredProjects);
 
         // Update the heading based on the current domain
         const title = document.querySelector('.title');
@@ -95,17 +101,14 @@ fetch('projects.json')
                                     <th>Weekly time commitment</th>
                                     <td>${project["Weekly Time Commitment"]}</td>
                                 </tr>
+                                
                                 <tr>
-                                    <th>Assignment</th>
-                                    <td>${project["Assignment"]}</td>
-                                </tr>
-                                <tr>
-                                    <th>Instructions for assignment</th>
-                                    <td>${project["Instructions for assignment"]}</td>
+                                    <th>Student required to stay on campus</th>
+                                    <td>${project["Student required to stay on campus:"]}</td>
                                 </tr>
                                   <tr>
-                                    <th>Additional key points</th>
-                                    <td>${project["Additional key points"]}</td>
+                                    <th>Any other expectation from the students</th>
+                                    <td>${project["Any other expectation from the students"]}</td>
                                 </tr>
                             </table>
                         </div>
